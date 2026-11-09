@@ -1,0 +1,14 @@
+name: hermes-arcade
+version: 1.0.0
+manifest_version: 2
+description: >-
+  A neon arcade inside Hermes — three playable games (Snake, Breakout, Pong)
+  in the dashboard with persistent high scores, plus agent tools so Hermes can
+  answer questions about your scores and game stats.
+author: Leo
+license: MIT
+tags: [games, arcade, dashboard, fun]
+provides_tools:
+  - arcade_games
+  - arcade_top_scores
+  - arcade_player_stats

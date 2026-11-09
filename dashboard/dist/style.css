@@ -1,0 +1,229 @@
+/* Hermes Arcade — neon CRT styling. Scoped under .hermes-arcade-root. */
+
+@import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Press+Start+2P&display=swap");
+
+.hermes-arcade-root {
+  --ha-cyan: #22e6ff;
+  --ha-magenta: #ff2fd6;
+  --ha-yellow: #ffe94a;
+  --ha-green: #52ff8a;
+  --ha-red: #ff3a5e;
+  --ha-bg: #05060f;
+  --ha-panel: #0a0d1f;
+  font-family: "Orbitron", "Segoe UI", sans-serif;
+  color: #d7f6ff;
+  user-select: none;
+}
+
+.hermes-arcade-root * { box-sizing: border-box; }
+
+.ha-shell {
+  display: grid;
+  grid-template-columns: minmax(0, 780px) 300px;
+  gap: 18px;
+  align-items: start;
+}
+
+@media (max-width: 1100px) {
+  .ha-shell { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* ---------- cabinet ---------- */
+
+.ha-cabinet {
+  position: relative;
+  background: var(--ha-bg);
+  border: 1px solid rgba(34, 230, 255, 0.35);
+  border-radius: 12px;
+  box-shadow:
+    0 0 24px rgba(34, 230, 255, 0.18),
+    inset 0 0 60px rgba(34, 230, 255, 0.05);
+  overflow: hidden;
+}
+
+.ha-marquee {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+  background: linear-gradient(180deg, rgba(255, 47, 214, 0.16), rgba(255, 47, 214, 0.03));
+  border-bottom: 1px solid rgba(255, 47, 214, 0.4);
+}
+
+.ha-marquee-title {
+  font-family: "Press Start 2P", monospace;
+  font-size: 13px;
+  letter-spacing: 1px;
+  color: var(--ha-magenta);
+  text-shadow: 0 0 8px var(--ha-magenta), 0 0 22px rgba(255, 47, 214, 0.6);
+}
+
+.ha-marquee-lights { display: flex; gap: 6px; }
+
+.ha-light {
+  width: 9px; height: 9px; border-radius: 50%;
+  background: var(--ha-yellow);
+  box-shadow: 0 0 8px var(--ha-yellow);
+  animation: ha-blink 1.1s infinite;
+}
+.ha-light:nth-child(2) { animation-delay: 0.18s; background: var(--ha-cyan); box-shadow: 0 0 8px var(--ha-cyan); }
+.ha-light:nth-child(3) { animation-delay: 0.36s; background: var(--ha-green); box-shadow: 0 0 8px var(--ha-green); }
+.ha-light:nth-child(4) { animation-delay: 0.54s; background: var(--ha-magenta); box-shadow: 0 0 8px var(--ha-magenta); }
+
+@keyframes ha-blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.25; } }
+
+.ha-stage { position: relative; background: #02030a; }
+
+.ha-stage canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  image-rendering: pixelated;
+}
+
+/* CRT overlays */
+.ha-crt::after {
+  content: "";
+  position: absolute; inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0px, transparent 2px,
+    rgba(0, 0, 0, 0.22) 3px, rgba(0, 0, 0, 0.22) 4px
+  );
+  mix-blend-mode: multiply;
+}
+
+.ha-crt::before {
+  content: "";
+  position: absolute; inset: 0;
+  pointer-events: none;
+  z-index: 2;
+  background: radial-gradient(ellipse at center, transparent 55%, rgba(0, 0, 0, 0.45) 100%);
+}
+
+.ha-stage.ha-shake { animation: ha-shake 0.35s; }
+@keyframes ha-shake {
+  0%, 100% { transform: translate(0, 0); }
+  20% { transform: translate(-6px, 3px); }
+  40% { transform: translate(5px, -4px); }
+  60% { transform: translate(-4px, -3px); }
+  80% { transform: translate(4px, 3px); }
+}
+
+.ha-stage.ha-flash::after { animation: ha-flash 0.3s; }
+@keyframes ha-flash {
+  0% { background: rgba(255, 255, 255, 0.55); }
+  100% { background: transparent; }
+}
+
+.ha-statusbar {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 16px;
+  border-top: 1px solid rgba(34, 230, 255, 0.25);
+  font-size: 12px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.ha-statusbar .ha-stat b {
+  color: var(--ha-cyan);
+  text-shadow: 0 0 10px rgba(34, 230, 255, 0.8);
+  font-weight: 700;
+  margin-left: 6px;
+}
+
+.ha-hint {
+  padding: 8px 16px 12px;
+  font-size: 11px;
+  letter-spacing: 1px;
+  color: rgba(215, 246, 255, 0.55);
+}
+
+/* ---------- game select ---------- */
+
+.ha-games { display: flex; gap: 10px; margin-bottom: 14px; }
+
+.ha-game-btn {
+  flex: 1;
+  padding: 12px 8px;
+  background: var(--ha-panel);
+  border: 1px solid rgba(34, 230, 255, 0.3);
+  border-radius: 8px;
+  color: #d7f6ff;
+  font-family: "Press Start 2P", monospace;
+  font-size: 10px;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.ha-game-btn:hover { border-color: var(--ha-cyan); box-shadow: 0 0 14px rgba(34, 230, 255, 0.35); }
+.ha-game-btn.active {
+  border-color: var(--ha-magenta);
+  color: var(--ha-magenta);
+  box-shadow: 0 0 16px rgba(255, 47, 214, 0.45), inset 0 0 12px rgba(255, 47, 214, 0.15);
+}
+
+/* ---------- sidebar ---------- */
+
+.ha-sidebar { display: flex; flex-direction: column; gap: 14px; }
+
+.ha-panel {
+  background: var(--ha-panel);
+  border: 1px solid rgba(34, 230, 255, 0.25);
+  border-radius: 12px;
+  padding: 14px 16px;
+}
+
+.ha-panel-title {
+  font-family: "Press Start 2P", monospace;
+  font-size: 10px;
+  letter-spacing: 1px;
+  color: var(--ha-yellow);
+  text-shadow: 0 0 10px rgba(255, 233, 74, 0.7);
+  margin-bottom: 12px;
+}
+
+.ha-board { list-style: none; margin: 0; padding: 0; }
+
+.ha-board li {
+  display: grid;
+  grid-template-columns: 26px 1fr auto;
+  gap: 8px;
+  padding: 5px 0;
+  font-size: 13px;
+  letter-spacing: 2px;
+  border-bottom: 1px dashed rgba(34, 230, 255, 0.12);
+}
+.ha-board li:last-child { border-bottom: none; }
+.ha-board li:nth-child(1) { color: var(--ha-yellow); text-shadow: 0 0 8px rgba(255, 233, 74, 0.8); }
+.ha-board li:nth-child(2) { color: #e8fbff; }
+.ha-board li:nth-child(3) { color: #b7e9f5; }
+
+.ha-board .ha-rank { opacity: 0.7; }
+.ha-board .ha-score { font-weight: 700; }
+
+.ha-empty { font-size: 12px; color: rgba(215, 246, 255, 0.45); letter-spacing: 1px; }
+
+.ha-summary { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.ha-chip {
+  background: rgba(34, 230, 255, 0.06);
+  border: 1px solid rgba(34, 230, 255, 0.18);
+  border-radius: 8px;
+  padding: 8px 10px;
+  font-size: 11px;
+  letter-spacing: 1px;
+}
+.ha-chip b { display: block; font-size: 15px; color: var(--ha-green); text-shadow: 0 0 8px rgba(82, 255, 138, 0.7); margin-top: 2px; }
+
+.ha-coin {
+  font-family: "Press Start 2P", monospace;
+  font-size: 9px;
+  text-align: center;
+  color: var(--ha-cyan);
+  letter-spacing: 1px;
+  animation: ha-blink 1.6s infinite;
+  padding: 4px 0;
+}

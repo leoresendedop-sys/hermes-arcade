@@ -1,0 +1,11 @@
+{
+  "name": "hermes-arcade",
+  "label": "Arcade",
+  "description": "Neon mini-games (Snake, Breakout, Pong) with persistent high scores.",
+  "icon": "Zap",
+  "version": "1.0.0",
+  "tab": { "path": "/arcade", "position": "end" },
+  "entry": "dist/index.js",
+  "css": "dist/style.css",
+  "api": "plugin_api.py"
+}
